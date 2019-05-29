@@ -15,6 +15,9 @@
         <div v-for="item of list">
             {{item.addr}}
         </div>
+        <div style="color:red">
+            {{postData.advanceCollection}}
+        </div>
 	</div>
 </template>
 
@@ -29,29 +32,26 @@ export default {
             createTimeEnd: '2019-05-31',
             curToken: '059a60ca-e103-4797-851f-fd25fb1baddd',
         }
-        let {data} =await app.$axios.get( `/zyhqAScenicTest/tscenic/findPopularTscenicList?${app.$Common.qs(obj)}` )
-
-        let {postDatas} =await app.$axios.post( `/zyhqAScenicTest/tscenicStat/getStatisticsFinancial` ,postObj)
-        console.log("postDatas")
-        console.log(postDatas)
+        let list =await app.$axios.get( `/zyhqAScenicTest/tscenic/findPopularTscenicList?${app.$Common.qs(obj)}` )
+        let postData =await app.$axios.post( `/zyhqAScenicTest/tscenicStat/getStatisticsFinancial` ,postObj)
         return { 
-            list: data.data ,
-            postData:postDatas
+            list: list.data.data ,
+            postData:postData.data.data
         }
     },
 	mounted() {
-        let postObj = {
-            currentPage: 1,
-            pageSize: 10,
-            createTimeStart: '2019-05-01',
-            createTimeEnd: '2019-05-31',
-            curToken: '059a60ca-e103-4797-851f-fd25fb1baddd',
-        }
-        this.$axios.post( `/zyhqAScenicTest/tscenicStat/getStatisticsFinancial` ,postObj)
-        .then(res=>{
-            console.log("mounted")
-            console.log(res)
-        })
+        // let postObj = {
+        //     currentPage: 1,
+        //     pageSize: 10,
+        //     createTimeStart: '2019-05-01',
+        //     createTimeEnd: '2019-05-31',
+        //     curToken: '059a60ca-e103-4797-851f-fd25fb1baddd',
+        // }
+        // this.$axios.post( `/zyhqAScenicTest/tscenicStat/getStatisticsFinancial` ,postObj)
+        // .then(res=>{
+        //     console.log("mounted")
+        //     console.log(res)
+        // })
         // console.log(this.list)
 	}
 };
